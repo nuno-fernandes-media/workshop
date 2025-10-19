@@ -48,11 +48,19 @@
 - Add auto-merge for patch updates (optional)
 - PR: `feature/DEP-setup` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
-## 7) API Task (single)
+## 7) GitHub Secrets Configuration
+- Set up repository secrets: `API_HOST`, `API_PORT`, `API_TITLE`, `API_VERSION`, `API_ENV`
+- Configure staging environment secrets (different port and title)
+- Configure production environment secrets
+- Test environment variable usage in workflows
+- Document secret setup process in `GITHUB_SECRETS.md`
+- PR: `feature/SEC-secrets` → `dev` · Labels: `feature ✨`, `Semver-Patch`
+
+## 8) API Task (single)
 **Implement:** `GET /api/sensors/{mac_address}` (case-insensitive, validates MAC `AA:BB:CC:DD:EE:FF`)
 - **200** with complete `Sensor`, **404** if doesn't exist
 - PR: `feature/API-101-get-sensor-by-mac` → `dev` · Labels: `feature ✨`, `Semver-Minor`
 
-## 8) Release flow
+## 9) Release flow
 1. `pre-release/vx.x.x` (from `dev`) → PR to `staging` (label `pre-release 🚀`)
 2. `release/vx.x.x` (from `staging`) → PR to `prod` (label `release 🚀`)
