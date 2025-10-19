@@ -1,45 +1,58 @@
-# 📋 Tarefas do Workshop (API-only, sem testes)
+# 📋 Workshop Tasks (API-only, no tests)
 
-## 0) Branches & Proteções
-1. Criar branches: `dev` (default), `staging`, `prod`.
-2. Ativar proteção em todos:
-   - PR obrigatório, 1 aprovação
+## 0) Branches & Protection
+1. Create branches: `dev` (default), `staging`, `prod`.
+2. Enable protection on all:
+   - Required PR, 1 approval
    - Dismiss stale reviews
-   - Checks obrigatórios (Python CI import check)
-3. PR: `chore/BOOT-branches` → `dev` · Labels: `docs 📓`, `Semver-Patch`
+   - Required checks (Python CI import check)
+   - Restrict pushes to matching branches
+   - Allow force pushes: disabled
+   - Allow deletions: disabled
+3. Set branch rules:
+   - `dev`: Allow pushes from feature branches
+   - `staging`: Only allow pushes from `dev` via PR
+   - `prod`: Only allow pushes from `staging` via PR
 
-## 1) Labels & Template de PR
-- Criar labels: `feature ✨`, `bugfix 🐛`, `docs 📓`, `Semver-Major`, `Semver-Minor`, `Semver-Patch` (+ `pre-release 🚀`, `release 🚀` opcional)
-- Adicionar `.github/PULL_REQUEST_TEMPLATE.md` (já incluído)
+## 1) Labels & PR Template
+- Create labels: `feature ✨`, `bugfix 🐛`, `docs 📓`, `Semver-Major`, `Semver-Minor`, `Semver-Patch`, `pre-release 🚀`, `release 🚀`
+- Add `.github/PULL_REQUEST_TEMPLATE.md`
 - PR: `docs/LBL-setup` → `dev` · Labels: `docs 📓`, `Semver-Patch`
 
-## 2) Auto-label por prefixo de branch
-- Adicionar `label-by-branch.yml` (incluído)
+## 2) Auto-label by branch prefix
+- Add `label-by-branch.yml`
 - PR: `feature/CI-labels` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
-## 3) Exigir Semver num PR
-- Adicionar `require-semver.yml` (incluído)
+## 3) Require Semver in PR
+- Add `require-semver.yml` workflow
+- Validates that PR has one of: `Semver-Major`, `Semver-Minor`, `Semver-Patch`
+- Fails CI if no Semver label is present
 - PR: `feature/CI-semver` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
-## 4) Versionamento automático (tag ao merge em `prod`)
-- Ficheiro `VERSION` começa em `0.1.0`
-- Workflow `tag-on-prod.yml` (incluído) lê label Semver do PR mergeado e faz bump + tag
+## 4) Automatic versioning (tag on merge to `dev`)
+- `VERSION` file starts at `1.0.0`
+- `tag-on-dev.yml` workflow reads Semver label from merged PR and does bump + tag
 - PR: `feature/CI-versioning` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
-## 5) Deploy simulado
-- `deploy-staging.yml` (push para `staging`) e `deploy-prod.yml` (push para `prod`)
+## 5) Simulated deploy
+- `deploy-staging.yml` (push to `staging`) and `deploy-prod.yml` (push to `prod`)
+- Simulates deployment with echo commands and status updates
+- Includes environment-specific configurations
 - PR: `feature/CI-deploy` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
-## 6) CI mínimo (sem testes)
-- `python-ci.yml` faz apenas import check da app
-- PR: `feature/CI-python` → `dev` · Labels: `feature ✨`, `Semver-Patch`
+## 6) Dependabot Setup
+- Create `.github/dependabot.yml` configuration file
+- Enable automated dependency updates for Python packages
+- Set update schedule (weekly/monthly)
+- Configure security updates and version updates
+- Add auto-merge for patch updates (optional)
+- PR: `feature/DEP-setup` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
-## 7) Tarefa de API (única)
-**Implementar:** `GET /api/sensors/{mac_address}` (case-insensitive, valida MAC `AA:BB:CC:DD:EE:FF`)
-- **200** com `Sensor` completo, **404** se não existir
-- Pequena docstring no handler
+## 7) API Task (single)
+**Implement:** `GET /api/sensors/{mac_address}` (case-insensitive, validates MAC `AA:BB:CC:DD:EE:FF`)
+- **200** with complete `Sensor`, **404** if doesn't exist
 - PR: `feature/API-101-get-sensor-by-mac` → `dev` · Labels: `feature ✨`, `Semver-Minor`
 
-## 8) Fluxo de release
-1. `pre-release/v1.0.0` (de `dev`) → PR para `staging` (label `pre-release 🚀`)
-2. `release/v1.0.0` (de `staging`) → PR para `prod` (label `release 🚀`)
+## 8) Release flow
+1. `pre-release/vx.x.x` (from `dev`) → PR to `staging` (label `pre-release 🚀`)
+2. `release/vx.x.x` (from `staging`) → PR to `prod` (label `release 🚀`)

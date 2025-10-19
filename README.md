@@ -116,29 +116,6 @@ The [`TASKS.md`](./TASKS.md) file lists **all required tasks**, in order:
 - Simulated deployments
 - API enhancement (`GET /api/sensors/{mac_address}`)
 
-### 4. Create Pull Requests
-Each task should be completed via:
-- A properly named branch (`feature/...`, `docs/...`, `chore/...`)
-- A Pull Request to `dev`
-- Correct labels applied (e.g. `feature ✨`, `Semver-Minor`)
-- Review by teammates before merging
-
----
-
-## 🧩 Final Coding Task
-
-**Implement the following endpoint:**
-```
-GET /api/sensors/{mac_address}
-```
-
-Requirements:
-- Match `mac_address` **case-insensitively**
-- Return 404 if the sensor does not exist
-- Validate MAC format (`AA:BB:CC:DD:EE:FF`)
-- Use branch `feature/API-101-get-sensor-by-mac` → PR to `dev`
-- Labels: `feature ✨`, `Semver-Minor`
-
 ---
 
 ## 🏁 Success Criteria
