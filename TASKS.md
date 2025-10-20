@@ -1,4 +1,4 @@
-# 📋 Workshop Tasks (API-only, no tests)
+# 📋 Workshop Tasks
 
 ## 0) Repository Setup
 1. Create a new repository: `workshop-mediaprobe-{team-name}`
@@ -52,7 +52,6 @@
 - Enable automated dependency updates for Python packages
 - Set update schedule (weekly/monthly)
 - Configure security updates and version updates
-- Add auto-merge for patch updates (optional)
 - PR: `feature/DEP-setup` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
 ## 7) GitHub Secrets Configuration
@@ -62,7 +61,7 @@
 - Test environment variable usage in workflows
 - PR: `feature/SEC-secrets` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
-## 8) API Task (single)
+## 8) API Task
 **Implement:** `GET /api/sensors/{mac_address}` (case-insensitive, validates MAC `AA:BB:CC:DD:EE:FF`)
 - **200** with complete `Sensor`, **404** if doesn't exist
 - PR: `feature/API-101-get-sensor-by-mac` → `dev` · Labels: `feature ✨`, `Semver-Minor`
