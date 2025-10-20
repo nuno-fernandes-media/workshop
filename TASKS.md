@@ -12,7 +12,7 @@
 2. Enable protection on all:
    - Required PR, 1 approval
    - Dismiss stale reviews
-   - Required checks (Python CI import check)
+   - Required checks
    - Restrict pushes to matching branches
    - Allow force pushes: disabled
    - Allow deletions: disabled
