@@ -1,6 +1,13 @@
 # 📋 Workshop Tasks (API-only, no tests)
 
-## 0) Branches & Protection
+## 0) Repository Setup
+1. Create a new repository: `workshop-mediaprobe-{team-name}`
+2. Fork this project template to your new repository
+3. Clone your forked repository locally
+4. Set up remote tracking with upstream
+5. Verify you can push/pull from your repository
+
+## 1) Branches & Protection
 1. Create branches: `dev` (default), `staging`, `prod`.
 2. Enable protection on all:
    - Required PR, 1 approval
@@ -53,7 +60,6 @@
 - Configure staging environment secrets (different port and title)
 - Configure production environment secrets
 - Test environment variable usage in workflows
-- Document secret setup process in `GITHUB_SECRETS.md`
 - PR: `feature/SEC-secrets` → `dev` · Labels: `feature ✨`, `Semver-Patch`
 
 ## 8) API Task (single)
