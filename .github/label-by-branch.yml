@@ -1,0 +1,53 @@
+name: Label by Branch
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  label-by-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Add label based on branch name
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const branch = pr.head.ref.toLowerCase();
+
+            let label = null;
+
+            if (branch.startsWith("feature/")) {
+              label = "feature ✨";
+            } else if (branch.startsWith("bugfix/") || branch.startsWith("fix/")) {
+              label = "bugfix 🐛";
+            } else if (branch.startsWith("docs/")) {
+              label = "docs 📓";
+            } else if (branch.startsWith("Semver-Major/")) {
+              label = "Semver-Major";
+            } else if (branch.startsWith("Semver-Minor/")) {
+              label = "Semver-Minor";
+            } else if (branch.startsWith("Semver-Patch/")) {
+              label = "Semver-Patch";
+            } else if (branch.startsWith("pre-release/")) {
+              label = "pre-release 🚀";
+            } else if (branch.startsWith("release/")) {
+              label = "release 🚀";
+            } else {
+              label = "other";
+            }
+
+            if (label) {
+              await github.rest.issues.addLabels({
+                issue_number: pr.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: [label]
+              });
+              console.log(`Added label: ${label}`);
+            }
