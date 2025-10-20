@@ -1,0 +1,29 @@
+name: Require Semantic Version
+
+on:
+  push:
+    branches:
+      - 'v*'        # Only runs on branches starting with 'v'
+    tags:
+      - 'v*'        # Also runs on tags starting with 'v'
+
+jobs:
+  check-semver:
+    name: Check Semantic Version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check branch or tag name follows SemVer
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const ref = context.ref; // e.g., refs/heads/v1.2.3 or refs/tags/v1.2.3
+            const name = ref.replace(/^refs\/(heads|tags)\//, '');
+            const semverRegex = /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-.]+)?(?:\+[0-9A-Za-z-.]+)?$/;
+
+            if (!semverRegex.test(name)) {
+              core.setFailed(`❌ The name "${name}" is not a valid semantic version (expected format: vMAJOR.MINOR.PATCH).`);
+            } else {
+              console.log(`✅ "${name}" is a valid semantic version.`);
+            }
